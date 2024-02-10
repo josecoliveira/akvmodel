@@ -17,11 +17,27 @@
 <a href="..\akvmodel.py#L8"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `AKV`
+AKV is a class that instantiates AKV models. 
 
 
 
+**Args:**
+ 
+ - <b>`belief_state`</b> (List[List[float]]):  The initial belief state as a list. 
+ - <b>`influence_graph`</b> (List[List[float]]):  The influence graph as a adjacency             list. 
+ - <b>`update_function`</b> (Callable[[List[List[float]], List[List[float]]], List[List[float]]):              A function the gets a belief_state and an influence_graph and returns a             new belief_state. 
 
-<a href="..\akvmodel.py#L44"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+
+**Attributes:**
+ 
+ - <b>`belief_state`</b> (List[List[float]]):  Current belief state. It's a list of             lists, each list whitin is a belief array corresponding to the i-th             outcome in the domain. 
+ - <b>`influence_graph`</b> (List[List[float]]):  Adjacency list for the influence graph. 
+ - <b>`a`</b> (int):  Number of agents. 
+ - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
+ - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far             using the update function. 
+
+<a href="..\akvmodel.py#L65"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `__init__`
 
@@ -33,24 +49,9 @@ __init__(
 )
 ```
 
-AKV is a class that instantiates AKV models. 
 
 
 
-**Args:**
- 
- - <b>`belief_state`</b> (List[List[float]]):  The initial belief state as a list. $B$ in                 the literature. 
- - <b>`influence_graph`</b> (List[List[float]]):  The influence graph as a adjacency                 list. $\mathcal{I}$ in the literature. 
-
-
-
-**Attributes:**
- 
- - <b>`belief_state`</b> (List[List[float]]):  Current belief state. It's a list of                 lists, each list whitin is a belief array corresponding to the i-th                 outcome in the domain. 
- - <b>`influence_graph`</b> (List[List[float]]):  Adjacency list for the influence graph. 
- - <b>`a`</b> (int):  Number of agents. 
- - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
- - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far                 using the update function. 
 
 
 ---
@@ -77,13 +78,13 @@ Get the number of agents.
 
 **Returns:**
  
- - <b>`int`</b>:  Number of agents. $A$ in the literature. 
+ - <b>`int`</b>:  Number of agents. 
 
 
 
 ---
 
-<a href="..\akvmodel.py#L116"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L119"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `get_polarization`
 
@@ -109,7 +110,7 @@ Get Esteban-Ray polarization for all states in the history.
 
 ---
 
-<a href="..\akvmodel.py#L104"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L107"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `update`
 
@@ -128,7 +129,7 @@ Update the model one, updates the current belief state and add the new belief st
 
 ---
 
-<a href="..\akvmodel.py#L132"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L135"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `InfluenceGraphs`
 Catalog of Influence Graphs in the literature. All functions are static. 
@@ -138,7 +139,7 @@ Catalog of Influence Graphs in the literature. All functions are static.
 
 ---
 
-<a href="..\akvmodel.py#L160"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L163"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `circular`
 
@@ -165,7 +166,7 @@ The circular influence graph $\mathcal{I}^{clique}$ represents a social network 
 
 ---
 
-<a href="..\akvmodel.py#L135"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L138"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `clique`
 
@@ -192,7 +193,7 @@ The clique influence graph $\mathcal{I}^{clique}$ represents an idealized totall
 
 ---
 
-<a href="..\akvmodel.py#L223"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L226"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `disconnected`
 
@@ -219,7 +220,7 @@ The disconnected influence graph $\mathcal{I}^{disc}$ represents a social networ
 
 ---
 
-<a href="..\akvmodel.py#L188"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L191"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `faintly`
 
@@ -251,7 +252,7 @@ The faintly communicating influence graph $\mathcal{I}^{faint}$ represents a soc
 
 ---
 
-<a href="..\akvmodel.py#L242"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L245"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `malleable_influencers`
 
@@ -289,7 +290,7 @@ The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
 
 ---
 
-<a href="..\akvmodel.py#L291"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L294"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `unrelenting_influencers`
 
@@ -324,19 +325,17 @@ The unrelenting influencers influence graph $\mathcal{I}^{unrel}$ represents a s
 
 ---
 
-<a href="..\akvmodel.py#L327"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L330"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `InitialConfigurations`
-
-
-
+Catalog of initial belief configurations in the literature. 
 
 
 
 
 ---
 
-<a href="..\akvmodel.py#L377"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L382"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `extreme`
 
@@ -362,7 +361,7 @@ The extremely polarized belief configuration represents a situation in which hal
 
 ---
 
-<a href="..\akvmodel.py#L350"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L355"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `mildly`
 
@@ -388,7 +387,7 @@ The mildly polarized belief configuration with agents evenly split into two grou
 
 ---
 
-<a href="..\akvmodel.py#L404"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L409"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `tripolar`
 
@@ -414,7 +413,7 @@ The tripolar belief configuration with agents divided into three groups.
 
 ---
 
-<a href="..\akvmodel.py#L328"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L333"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `uniform`
 
@@ -437,6 +436,73 @@ The uniform belief configuration represents a set of agents whose beliefs are as
 **Returns:**
  
  - <b>`List[List[float]]`</b>:  Belief state for the inicial configuration. 
+
+
+---
+
+<a href="..\akvmodel.py#L441"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+## <kbd>class</kbd> `UpdateFunctions`
+Catalog of update functions in the literature. 
+
+
+
+
+---
+
+<a href="..\akvmodel.py#L443"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+### <kbd>method</kbd> `classic`
+
+```python
+classic(
+    belief_state: List[List[float]],
+    influence_graph: List[List[float]]
+) → List[List[float]]
+```
+
+Computes the classic update of a belief state given a influence graph. 
+
+
+
+**Args:**
+ 
+ - <b>`belief_state`</b> (List[List[float]]):  Belief state at time $t$. 
+ - <b>`influence_graph`</b> (List[List[float]]):  Influence graph as a adjacency matrix. 
+
+
+
+**Returns:**
+ 
+ - <b>`List[List[float]]`</b>:  Belief state at time $t + 1$. 
+
+---
+
+<a href="..\akvmodel.py#L458"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+### <kbd>method</kbd> `confirmation_bias`
+
+```python
+confirmation_bias(
+    belief_state: List[List[float]],
+    influence_graph: List[List[float]]
+) → List[List[float]]
+```
+
+Computes the confirmation bias update of a belief state given a influence graph. 
+
+
+
+**Args:**
+ 
+ - <b>`belief_state`</b> (List[List[float]]):  Belief state at time $t$. 
+ - <b>`influence_graph`</b> (List[List[float]]):  Influence graph as a adjacency matrix. 
+
+
+
+**Returns:**
+ 
+ - <b>`List[List[float]]`</b>:  Belief state at time $t + 1$. 
 
 
 
