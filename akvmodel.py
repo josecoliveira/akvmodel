@@ -6,7 +6,7 @@ epsilon = 0.01
 
 
 class AKV:
-    """AKV is a class that instantiates AKV models
+    """AKV is a class that instantiates AKV models.
 
     Args:
         belief_state (List[List[float]]): The initial belief state as a list. $B$ in \
@@ -52,7 +52,7 @@ class AKV:
             raise Exception("Influence must be between 0 and 1")
 
     def _check_belief_state(self):
-        """Check the belief values in the belief state
+        """Check the belief values in the belief state.
 
         Raises:
             Exception: If any belief value is not between 0 and 1.
@@ -84,7 +84,7 @@ class AKV:
 
     @property
     def number_of_agents(self) -> int:
-        """Get the number of agents
+        """Get the number of agents.
 
         Returns:
             int: Number of agents. $A$ in the literature.
@@ -94,6 +94,7 @@ class AKV:
     @property
     def domain_size(self) -> int:
         """Get the domain size, i.e. the number of belief arrays within a belief state.
+
         The domain represents a set of independent propositions.
 
         Returns:
@@ -248,7 +249,7 @@ class InfluenceGraphs:
         influence_on_influencer_2: float = 0.1,
         other_agents_influence: float = 0.1,
     ) -> List[List[float]]:
-        """ Creates a malleable influencers influence graph.
+        """Creates a malleable influencers influence graph.
         
         The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
         social network in which two agents have a strong influence on every other agent,

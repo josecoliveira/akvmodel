@@ -17,26 +17,11 @@
 <a href="..\akvmodel.py#L8"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `AKV`
-AKV is a class that instantiates AKV models 
 
 
 
-**Args:**
- 
- - <b>`belief_state`</b> (List[List[float]]):  The initial belief state as a list. $B$ in             the literature. 
- - <b>`influence_graph`</b> (List[List[float]]):  The influence graph as a adjacency             list. $\mathcal{I}$ in the literature. 
 
-
-
-**Attributes:**
- 
- - <b>`belief_state`</b> (List[List[float]]):  Current belief state. It's a list of             lists, each list whitin is a belief array corresponding to the i-th             outcome in the domain. 
- - <b>`influence_graph`</b> (List[List[float]]):  Adjacency list for the influence graph. 
- - <b>`a`</b> (int):  Number of agents. 
- - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
- - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far             using the update function. 
-
-<a href="..\akvmodel.py#L63"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="..\akvmodel.py#L44"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `__init__`
 
@@ -48,16 +33,33 @@ __init__(
 )
 ```
 
+AKV is a class that instantiates AKV models. 
 
 
 
+**Args:**
+ 
+ - <b>`belief_state`</b> (List[List[float]]):  The initial belief state as a list. $B$ in                 the literature. 
+ - <b>`influence_graph`</b> (List[List[float]]):  The influence graph as a adjacency                 list. $\mathcal{I}$ in the literature. 
+
+
+
+**Attributes:**
+ 
+ - <b>`belief_state`</b> (List[List[float]]):  Current belief state. It's a list of                 lists, each list whitin is a belief array corresponding to the i-th                 outcome in the domain. 
+ - <b>`influence_graph`</b> (List[List[float]]):  Adjacency list for the influence graph. 
+ - <b>`a`</b> (int):  Number of agents. 
+ - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
+ - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far                 using the update function. 
 
 
 ---
 
 #### <kbd>property</kbd> domain_size
 
-Get the domain size, i.e. the number of belief arrays within a belief state. The domain represents a set of independent propositions. 
+Get the domain size, i.e. the number of belief arrays within a belief state. 
+
+The domain represents a set of independent propositions. 
 
 
 
@@ -69,7 +71,7 @@ Get the domain size, i.e. the number of belief arrays within a belief state. The
 
 #### <kbd>property</kbd> number_of_agents
 
-Get the number of agents 
+Get the number of agents. 
 
 
 
