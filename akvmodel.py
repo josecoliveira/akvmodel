@@ -9,10 +9,12 @@ class AKV:
     """AKV is a class that instantiates AKV models.
 
     Args:
-        belief_state (List[List[float]]): The initial belief state as a list. $B$ in \
-            the literature.
+        belief_state (List[List[float]]): The initial belief state as a list.
         influence_graph (List[List[float]]): The influence graph as a adjacency \
-            list. $\mathcal{I}$ in the literature.
+            list.
+        update_function(Callable[[List[List[float]], List[List[float]]], List[List[float]]): \
+            A function the gets a belief_state and an influence_graph and returns a \
+            new belief_state.
 
     Attributes:
         belief_state (List[List[float]]): Current belief state. It's a list of \
@@ -87,7 +89,7 @@ class AKV:
         """Get the number of agents.
 
         Returns:
-            int: Number of agents. $A$ in the literature.
+            int: Number of agents.
         """
         return self.a
 
@@ -127,7 +129,7 @@ class AKV:
         Returns:
             List[float]: List of polarization values.
         """
-        raise NotImplemented()
+        raise NotImplementedError("")
 
 
 class InfluenceGraphs:
@@ -326,6 +328,8 @@ class InfluenceGraphs:
 
 
 class InitialConfigurations:
+    """Catalog of initial belief configurations in the literature."""
+
     @staticmethod
     def uniform(num_agents: int) -> List[List[float]]:
         """Creates a uniform belief configuration with domain of size 2.
@@ -413,7 +417,8 @@ class InitialConfigurations:
 
         Returns:
             List[List[float]]: Belief state for the inicial configuration.
-        """        
+        """
+
         def B(i: int) -> float:
             n = num_agents
             if i < np.floor(n / 3):
@@ -431,3 +436,37 @@ class InitialConfigurations:
             [B(i) for i in range(num_agents)],
             [1 - B(i) for i in range(num_agents)],
         ]
+
+
+class UpdateFunctions:
+    """Catalog of update functions in the literature."""    
+    @staticmethod
+    def classic(
+        belief_state: List[List[float]], influence_graph: List[List[float]]
+    ) -> List[List[float]]:
+        """Computes the classic update of a belief state given a influence graph.
+
+        Args:
+            belief_state (List[List[float]]): Belief state at time $t$.
+            influence_graph (List[List[float]]): Influence graph as a adjacency matrix.
+
+        Returns:
+            List[List[float]]: Belief state at time $t + 1$.
+        """        
+        raise NotImplementedError("")
+
+    @staticmethod
+    def confirmation_bias(
+        belief_state: List[List[float]], influence_graph: List[List[float]]
+    ) -> List[List[float]]:
+        """Computes the confirmation bias update of a belief state given a influence
+        graph.
+
+        Args:
+            belief_state (List[List[float]]): Belief state at time $t$.
+            influence_graph (List[List[float]]): Influence graph as a adjacency matrix.
+
+        Returns:
+            List[List[float]]: Belief state at time $t + 1$.
+        """   
+        raise NotImplementedError("")
