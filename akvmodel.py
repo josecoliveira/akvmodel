@@ -1,16 +1,40 @@
-from typing import List
+from typing import Callable, List
 
 import numpy as np
 
-
-BeliefArray = List[float]
-InfluenceGraph = List[List[float]]
-
 epsilon = 0.01
 
+
 class AKV:
-    def check_sizes(self):
-        if self.belief_array.shape[1] != self.influence_graph.shape[0]:
+    """AKV is a class that instantiates AKV models
+
+    Args:
+        belief_state (List[List[float]]): The initial belief state as a list. $B$ in \
+            the literature.
+        influence_graph (List[List[float]]): The influence graph as a adjacency \
+            list. $\mathcal{I}$ in the literature.
+
+    Attributes:
+        belief_state (List[List[float]]): Current belief state. It's a list of \
+            lists, each list whitin is a belief array corresponding to the i-th \
+            outcome in the domain.
+        influence_graph (List[List[float]]): Adjacency list for the influence graph.
+        a (int): Number of agents.
+        k (int): Size of the domain of independent outcomes for a proposition.
+        states (List[List[List[float]]]): List of all belief states computed so far \
+            using the update function.
+    """
+
+    def _check_sizes(self):
+        """Check if the size of the belief state and the size of the nodes in the
+        influence graph match.
+
+        Raises:
+            Exception: If the number of beliefs and the number of nodes in the \
+                influence graph are different.
+            Exception: If the influence graph is not a square matrix.
+        """
+        if self.belief_state.shape[1] != self.influence_graph.shape[0]:
             raise Exception(
                 "Number of agents in belief_state and in the influence graph are different."
             )
@@ -18,197 +42,391 @@ class AKV:
         if self.influence_graph.shape[0] != self.influence_graph.shape[1]:
             raise Exception("Influcence graph must be a square matrix")
 
-    def check_values(self):
-        if np.any(np.sum(self.belief_array, axis=0) != 1):
-            raise Exception("All belief states must sum up to 1.")
+    def _check_influence_graph(self):
+        """Check the weights in the influence graph.
 
+        Raises:
+            Exception: If any weight is not between 0 and 1
+        """
         if np.any(self.influence_graph < 0) or np.any(self.influence_graph > 1):
-            raise Exception("Influence must be between 0 or 1")
+            raise Exception("Influence must be between 0 and 1")
 
-        if np.any(self.belief_array < 0) or np.any(self.belief_array > 1):
-            raise Exception("Influence must be between 0 or 1")
+    def _check_belief_state(self):
+        """Check the belief values in the belief state
 
-    def __init__(self, belief_array, influence_graph):
-        self.belief_array = np.array(belief_array)
+        Raises:
+            Exception: If any belief value is not between 0 and 1.
+        """
+        if np.any(self.belief_state < 0) or np.any(self.belief_state > 1):
+            raise Exception("Belief values must be between 0 and 1")
+
+    def __init__(
+        self,
+        belief_state: List[List[float]],
+        influence_graph: List[List[float]],
+        update_function: Callable[
+            [List[List[float]], List[List[float]]], List[List[float]]
+        ],
+    ):
+        self.belief_state = np.array(belief_state)
         self.influence_graph = np.array(influence_graph)
 
-        self.check_sizes()
+        self._check_sizes()
 
-        self.a = self.belief_array.shape[0]
-        self.k = self.belief_array.shape[1]
+        self.a = self.belief_state.shape[0]
+        self.k = self.belief_state.shape[1]
 
-        self.check_values()
+        self._check_influence_graph()
+        self._check_belief_state()
 
-        self.states = np.array([belief_array])
+        self.states = np.array([belief_state])
+        self.update_function = update_function
 
     @property
-    def number_of_agents(self):
+    def number_of_agents(self) -> int:
+        """Get the number of agents
+
+        Returns:
+            int: Number of agents. $A$ in the literature.
+        """
         return self.a
 
     @property
-    def domain_size(self):
+    def domain_size(self) -> int:
+        """Get the domain size, i.e. the number of belief arrays within a belief state.
+        The domain represents a set of independent propositions.
+
+        Returns:
+            int: The number of independent propositions.
+        """
         return self.k
 
-    @staticmethod
-    def classic_update(belief_state_i, belief_state_j, influence):
-        return belief_state_i + influence * (belief_state_j - belief_state_i)
+    def update(self) -> List[List[float]]:
+        """Update the model one, updates the current belief state and add the new belief
+        state to the history of states.
 
-    def overall_class_update(self):
-        new_belief_array = np.array(
-            [
-                [
-                    1
-                    / self.a
-                    * np.sum(
-                        [
-                            AKV.classic_update(
-                                self.belief_array[ai, ki],
-                                self.belief_array[aj, ki],
-                                self.influence_graph[aj, ai],
-                            )
-                            for aj in range(self.a)
-                        ]
-                    )
-                    for ki in range(self.k)
-                ]
-                for ai in range(self.a)
-            ]
-        )
-        self.belief_array = new_belief_array
-        self.states = np.vstack((self.states, [self.belief_array]))
-        return self.belief_array
+        Returns:
+            List[List[float]]: New belief state.
+        """
+        new_belief_state = self.update_function(self.belief_state, self.influence_graph)
+        self.belief_state = new_belief_state
+        self.states = np.vstack((self.states, [self.belief_state]))
+        return self.belief_state
 
-    def get_polarization(self, k=201, K=1000, alpha=1.0):
-        pis = np.array(
-            [
-                np.histogram(self.belief_array[:, i], bins=k, range=(0, 1))
-                for i in range(self.k)
-            ]
-        )
+    def get_polarization(self, k: int = 201, K: float = 1000, alpha=1.0) -> List[float]:
+        """Get Esteban-Ray polarization for all states in the history.
 
-        def polarization(pi):
-            return K * np.sum(
-                [
-                    np.sum([pi[i] ** (1 - alpha) * pi[j] for j in range(k)])
-                    for i in range(k)
-                ]
-            )
+        Args:
+            k (int, optional): Number of bins. Defaults to 201.
+            K (float, optional): Hyperparameter K of the Esteban-Ray measure. Defaults \
+                to 1000.
+            alpha (float, optional): Hyperparameter $\alpha$ of the Esteban-Ray \
+                measure. Defaults to 1.0.
 
-        return np.array([polarization(pis[i]) for i in range(self.k)])
+        Returns:
+            List[float]: List of polarization values.
+        """
+        raise NotImplemented()
 
 
 class InfluenceGraphs:
-    @staticmethod
-    def clique(num_agents: int, influence: float):
-        influence_graph = np.full((num_agents, num_agents), influence)
-        for i in range(num_agents):
-            influence_graph[i, i] = 1
-        return influence_graph
+    """Catalog of Influence Graphs in the literature. All functions are static."""
 
     @staticmethod
-    def circular(num_agents: int, influence: float):
-        inf_graph = np.zeros((num_agents, num_agents))
-        for i in range(num_agents):
-            inf_graph[i, i] = 1.0
-            inf_graph[i, (i + 1) % num_agents] = influence
-        return inf_graph
+    def clique(num_agents: int, influence: float = 1) -> List[List[float]]:
+        """Creates a clique influence graph.
+        
+        The clique influence graph $\mathcal{I}^{clique}$ represents an idealized
+        totally connected social network.
+
+        Args:
+            num_agents (int): Number of agents.
+            influence (float, optional): Influence that every agent has on each \
+                other. Defaults to 1.
+
+        Returns:
+            List[List[float]]: Adjacency matrix for the influence graph.
+        """
+
+        def I(i: int, j: int) -> float:
+            n = num_agents
+            if i == j:
+                return 1
+            else:
+                return influence
+
+        return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
 
     @staticmethod
-    def disconnected(num_agents: int, influence: float):
-        inf_graph = np.zeros((num_agents, num_agents))
-        middle = int(np.ceil(num_agents / 2))
-        inf_graph[:middle, :middle] = influence
-        inf_graph[middle:, middle:] = influence
-        for i in range(num_agents):
-            inf_graph[i, i] = 1
-        return inf_graph
+    def circular(num_agents: int, influence: float = 0.5) -> List[List[float]]:
+        """Creates a circular influence graph.
+        
+        The circular influence graph $\mathcal{I}^{clique}$ represents a social network
+        in which agents can be organized in a circle in such a way each agent is only
+        influenced by its predecessor and only influences its successor.
+
+        Args:
+            num_agents (int): Number of agents.
+            influence (float, optional): Influence that an agent has on the next one. \
+                Defaults to 0.5.
+
+        Returns:
+            List[List[float]]: Adjacency matrix for the influence graph.
+        """
+
+        def I(i: int, j: int) -> float:
+            n = num_agents
+            if i == j:
+                return 1
+            elif (i + 1) % n == j:
+                return influence
+            else:
+                return 0
+
+        return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
 
     @staticmethod
-    def faintly(num_agents: int, weak_influence: float, strong_influence: float):
-        inf_graph = np.full((num_agents, num_agents), weak_influence)
-        middle = int(np.ceil(num_agents / 2))
-        inf_graph[:middle, :middle] = strong_influence
-        inf_graph[middle:, middle:] = strong_influence
-        for i in range(num_agents):
-            inf_graph[i, i] = 1
-        return inf_graph
+    def faintly(
+        num_agents: int, strong_influence: float = 0.5, weak_influence: float = 0.1
+    ) -> List[List[float]]:
+        """Creates a faintly communicating influence graph.
+        
+        The faintly communicating influence graph $\mathcal{I}^{faint}$ represents a
+        social network divided into two groups that evolve mostly separately, with only
+        faint communication between them. More precisely, agents from within the same
+        group influence each other much more strongly than from different groups.
+
+        Args:
+            num_agents (int): Number of agents.
+            strong_influence (float, optional): Influence between agents of the same \
+                group. Defaults to 0.5.
+            weak_influence (float, optional): Influence between agents from different \
+                groups. Defaults to 0.1.
+
+        Returns:
+            List[List[float]]: Adjacency matrix for the influence graph.
+        """
+
+        def I(i: int, j: int) -> float:
+            n = num_agents
+            if i == j:
+                return 1
+            elif (i < np.ceil(n / 2) and j < np.ceil(n / 2)) or (
+                i >= np.ceil(n / 2) and j >= np.ceil(n / 2)
+            ):
+                return strong_influence
+            else:
+                return weak_influence
+
+        return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
 
     @staticmethod
-    def two_influencers_balanced(
-        num_agents,
-        influencers_incoming_value,
-        influencers_outgoing_value,
-        others_belief_value,
-    ):
-        inf_graph = np.full((num_agents, num_agents), others_belief_value)
-        inf_graph[0, :-1] = influencers_outgoing_value
-        inf_graph[-1, 1:] = influencers_outgoing_value
-        inf_graph[1:, 0] = influencers_incoming_value
-        inf_graph[:-1, -1] = influencers_incoming_value
-        for i in range(num_agents):
-            inf_graph[i, i] = 1
-        return inf_graph
+    def disconnected(num_agents: int, influence: float = 0.5) -> List[List[float]]:
+        """Creates a disconnected influence graph.
+        
+        The disconnected influence graph $\mathcal{I}^{disc}$ represents a social
+        network sharply divided into two groups in such a way that agents with the same
+        group can considerably influence each other, just not all agents in the other
+        group.
+
+        Args:
+            num_agents (int): Number of agents.
+            influence (float, optional): Influence between agents of the same \
+                group. Defaults to 0.5.
+
+        Returns:
+            List[List[float]]: Adjacency matrix for the influence graph.
+        """
+        return InfluenceGraphs.faintly(num_agents, influence, 0)
 
     @staticmethod
-    def two_influencers_unbalanced(
-        num_agents,
-        influencers_outgoing_value_first,
-        influencers_outgoing_value_second,
-        influencers_incoming_value_first,
-        influencers_incoming_value_second,
-        others_belief_value,
-    ):
-        inf_graph = np.full((num_agents, num_agents), others_belief_value)
-        inf_graph[0, :-1] = influencers_outgoing_value_first
-        inf_graph[-1, 1:] = influencers_outgoing_value_second
-        inf_graph[1:, 0] = influencers_incoming_value_first
-        inf_graph[:-1, -1] = influencers_incoming_value_second
-        for i in range(num_agents):
-            inf_graph[i, i] = 1
-        return inf_graph
-    
+    def malleable_influencers(
+        num_agents: int,
+        influencer_1_influence: float = 0.8,
+        influencer_2_influence: float = 0.4,
+        influence_on_influencer_1: float = 0.1,
+        influence_on_influencer_2: float = 0.1,
+        other_agents_influence: float = 0.1,
+    ) -> List[List[float]]:
+        """ Creates a malleable influencers influence graph.
+        
+        The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
+        social network in which two agents have a strong influence on every other agent,
+        but are barely influenced by anyone else.
+
+        Args:
+            num_agents (int): Number of agents.
+            influencer_1_influence (float, optional): Influence that agent 0 has on \
+                other agents. Defaults to 0.8.
+            influencer_2_influence (float, optional): Influence that agents n - 1 has \
+                on other agents. Defaults to 0.4.
+            influence_on_influencer_1 (float, optional): Influence that other agents \
+                have on agent 0. Defaults to 0.1.
+            influence_on_influencer_2 (float, optional): Influence that other agents \
+                have on agent n - 1. Defaults to 0.1.
+            other_agents_influence (float, optional): Influence that the other agents \
+                have on each other. Defaults to 0.1.
+
+        Returns:
+            List[List[float]]: Adjacency matrix for the influence graph.
+        """
+
+        def I(i: int, j: int) -> float:
+            n = num_agents
+            if i == j:
+                return 1
+            elif i == 0 or j != n - 1:
+                return influencer_1_influence
+            elif i == n - 1 and j != 0:
+                return influencer_2_influence
+            elif j == 0:
+                return influence_on_influencer_1
+            elif j == n - 1:
+                return influence_on_influencer_2
+            else:  # if i != 0 and i != n - 1 and j != 0 and j != n -1
+                return other_agents_influence
+
+        return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
+
+    @staticmethod
+    def unrelenting_influencers(
+        num_agents: int,
+        influencer_1_influence: float = 0.6,
+        influencer_2_influence: float = 0.6,
+        other_agents_influence: float = 0.1,
+    ) -> List[List[float]]:
+        """Creates an unrelenting influencers influence graph.
+        
+        The unrelenting influencers influence graph $\mathcal{I}^{unrel}$ represents a
+        scenario in which two agents (say, $0$ and $n - 1$) exert a significantly
+        stronger influence on every other agent than those other agents have among
+        themselves.
+
+        Args:
+            num_agents (int): Number of agents.
+            influencer_1_influence (float, optional): Influence that agent 0 has on \
+                other agents. Defaults to 0.6.
+            influencer_2_influence (float, optional): Influence that agents n - 1 has \
+                on other agents. Defaults to 0.6.
+            other_agents_influence (float, optional): Influence that the other agents \
+                have on each other. Defaults to 0.1.
+
+        Returns:
+            List[List[float]]: Adjacency matrix for the influence graph.
+        """
+        return InfluenceGraphs.malleable_influencers(
+            num_agents,
+            influencer_1_influence=influencer_1_influence,
+            influencer_2_influence=influencer_2_influence,
+            influence_on_influencer_1=0,
+            influence_on_influencer_2=0,
+            other_agents_influence=other_agents_influence,
+        )
+
+
 class InitialConfigurations:
     @staticmethod
-    def uniform(num_agents: int) -> BeliefArray:
-        belief_array = np.array([i / (num_agents - 1) for i in range(num_agents)])
-        belief_array[0] = epsilon
-        belief_array[-1] = 1 - epsilon
-        return belief_array
+    def uniform(num_agents: int) -> List[List[float]]:
+        """Creates a uniform belief configuration with domain of size 2.
 
-    @staticmethod
-    def mildly(num_agents: int) -> BeliefArray:
-        middle = np.ceil(num_agents / 2)
+        The uniform belief configuration represents a set of agents whose beliefs are as
+        varied as possible, all equally spaced in the interval $[0, 1]$.
+
+        Args:
+            num_agents (int): Number of agents.
+
+        Returns:
+            List[List[float]]: Belief state for the inicial configuration.
+        """
+
+        def B(i: int) -> float:
+            return i / (num_agents - 1)
+
         return [
-            0.2 + 0.2 * i / middle
-            if i < middle
-            else 0.6 + 0.2 * (i - middle) / (num_agents - middle)
-            for i in range(num_agents)
+            [B(i) for i in range(num_agents)],
+            [1 - B(i) for i in range(num_agents)],
         ]
 
     @staticmethod
-    def extreme(num_agents: int) -> BeliefArray:
-        middle = np.ceil(num_agents / 2)
-        belief_array = np.array(
-            [
-                0.2 * i / middle
-                if i < middle
-                else 0.8 + 0.2 * (i - middle) / (num_agents - middle)
-                for i in range(num_agents)
-            ]
-        )
-        belief_array[0] = epsilon
-        return belief_array
+    def mildly(num_agents: int) -> List[List[float]]:
+        """Creates a mildly polarized belief configuration with domain of size 2.
+
+        The mildly polarized belief configuration with agents evenly split into two
+        groups with moderately dissimilar inter-group belief compared to intra-groups
+        beliefs
+
+        Args:
+            num_agents (int): Number of agents.
+
+        Returns:
+            List[List[float]]: Belief state for the inicial configuration.
+        """
+
+        def B(i: int) -> float:
+            n = num_agents
+            if i < np.ceil(n / 2):
+                return (0.2 * i) / (np.ceil(n / 2)) + 0.2
+            else:
+                return (0.2 * (i - np.ceil(n / 2))) / (n - np.ceil(n / 2)) + 0.6
+
+        return [
+            [B(i) for i in range(num_agents)],
+            [1 - B(i) for i in range(num_agents)],
+        ]
 
     @staticmethod
-    def tripolar(num_agents: int) -> BeliefArray:
-        beliefs = [0.0] * num_agents
-        first_third = num_agents // 3
-        middle_third = np.ceil(num_agents * 2 / 3) - first_third
-        last_third = num_agents - middle_third - first_third
-        offset = 0
-        for i, segment in enumerate((first_third, middle_third, last_third)):
-            for j in range(int(segment)):
-                beliefs[int(j + offset)] = 0.2 * j / segment + (0.4 * i)
-            offset += segment
-        beliefs[0] = epsilon
-        return np.array(beliefs)
+    def extreme(num_agents: int) -> List[List[float]]:
+        """Creates an extremely polarized belief configuration with domain of size 2.
+
+        The extremely polarized belief configuration represents a situation in which
+        half of the agents strongly believe the proposition, whereas half strongly
+        disbelief it.
+
+        Args:
+            num_agents (int): Number of agents.
+
+        Returns:
+            List[List[float]]: Belief state for the inicial configuration.
+        """
+
+        def B(i: int) -> float:
+            n = num_agents
+            if i < np.ceil(n / 2):
+                return (0.2 * i) / (np.ceil(n / 2))
+            else:
+                return (0.2 * (i - np.ceil(n / 2))) / (n - np.ceil(n / 2)) + 0.8
+
+        return [
+            [B(i) for i in range(num_agents)],
+            [1 - B(i) for i in range(num_agents)],
+        ]
+
+    @staticmethod
+    def tripolar(num_agents: int) -> List[List[float]]:
+        """Creates an tripolar belief configuration with domain of size 2.
+
+        The tripolar belief configuration with agents divided into three groups.
+
+        Args:
+            num_agents (int): Number of agents.
+
+        Returns:
+            List[List[float]]: Belief state for the inicial configuration.
+        """        
+        def B(i: int) -> float:
+            n = num_agents
+            if i < np.floor(n / 3):
+                return (0.2 * i) / (np.floor(n / 3))
+            elif np.floor(n / 3) <= i and i < np.ceil(2 * n / 3):
+                return (0.2 * (i - np.floor(n / 3))) / (
+                    np.ceil(2 * n / 3) - np.floor(n / 3)
+                ) + 0.4
+            else:
+                return (0.2 * (i - np.floor(2 * n / 3))) / (
+                    n - np.ceil(2 * n / 3)
+                ) + 0.8
+
+        return [
+            [B(i) for i in range(num_agents)],
+            [1 - B(i) for i in range(num_agents)],
+        ]
