@@ -1,5 +1,5 @@
 [project]
-name = "akv_model"
+name = "akvmodel"
 version = "0.0.1"
 authors = [
     { name = "José C. Oliveira", email = "josecarlosdeoliveirajr@gmail.com" },
