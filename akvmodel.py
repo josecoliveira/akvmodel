@@ -116,7 +116,9 @@ class AKV:
         self.states = np.vstack((self.states, [self.belief_state]))
         return self.belief_state
 
-    def get_polarization(self, k: int = 201, K: float = 1000, alpha=1.0) -> List[float]:
+    def get_polarization(
+        self, k: int = 201, K: float = 1000, alpha=1.0
+    ) -> List[List[float]]:
         """Get Esteban-Ray polarization for all states in the history.
 
         Args:
@@ -439,7 +441,8 @@ class InitialConfigurations:
 
 
 class UpdateFunctions:
-    """Catalog of update functions in the literature."""    
+    """Catalog of update functions in the literature. All functions are static."""
+
     @staticmethod
     def classic(
         belief_state: List[List[float]], influence_graph: List[List[float]]
@@ -452,7 +455,7 @@ class UpdateFunctions:
 
         Returns:
             List[List[float]]: Belief state at time $t + 1$.
-        """        
+        """
         raise NotImplementedError("")
 
     @staticmethod
@@ -468,5 +471,5 @@ class UpdateFunctions:
 
         Returns:
             List[List[float]]: Belief state at time $t + 1$.
-        """   
+        """
         raise NotImplementedError("")
