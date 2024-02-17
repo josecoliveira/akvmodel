@@ -117,7 +117,7 @@ class AKV:
         return self.belief_state
 
     def get_polarization(
-        self, k: int = 201, K: float = 1000, alpha=1.0
+        self, k: int = 201, K: float = 1000, alpha: float =1.6
     ) -> List[List[float]]:
         """Get Esteban-Ray polarization for all states in the history.
 
@@ -126,12 +126,27 @@ class AKV:
             K (float, optional): Hyperparameter K of the Esteban-Ray measure. Defaults \
                 to 1000.
             alpha (float, optional): Hyperparameter $\alpha$ of the Esteban-Ray \
-                measure. Defaults to 1.0.
+                measure. Defaults to 1.6.
 
         Returns:
             List[float]: List of polarization values.
         """
-        raise NotImplementedError("")
+
+        def polarization(belief_array):
+            pi, bin_edges = np.histogram(
+                belief_array, bins=k, range=(0, 1), density=False
+            )
+            diff = np.diff(bin_edges)
+            pi = pi / np.sum(pi)
+            return K * np.sum(
+                np.sum(np.power(pi[i], 1 - alpha) * pi[j] * np.abs(diff[i]) for j in range(k))
+                for i in range(k) if pi[i] != 0
+            )
+
+        return [
+            [[polarization(belief_array)] for belief_array in state]
+            for state in self.states
+        ]
 
 
 class InfluenceGraphs:
