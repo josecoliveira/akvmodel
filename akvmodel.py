@@ -136,16 +136,27 @@ class AKV:
             pi, bin_edges = np.histogram(
                 belief_array, bins=k, range=(0, 1), density=False
             )
-            diff = np.diff(bin_edges)
+            # diff = np.diff(bin_edges)
+            # y = [(1 / k) + (1 / k) * i for i in range(k)]
+            y = [bin_edges[i] + (1 / k) / 2 for i in range(k)]
+            # diff = (1 / k)
+            # pi = pi / np.sum(pi)
             pi = pi / np.sum(pi)
+
             return K * np.sum(
-                np.sum(np.power(pi[i], 1 - alpha) * pi[j] * np.abs(diff[i]) for j in range(k))
-                for i in range(k) if pi[i] != 0
+                # np.sum(np.power(pi[i], 1 + alpha) * pi[j] * np.abs(diff[i]) for j in range(k))
+                np.sum(np.power(pi[i], 1 + alpha) * pi[j] * np.abs(y[i] - y[j]) for j in range(k))
+                # for i in range(k) if pi[i] != 0
+                for i in range(k)
             )
 
+        # return [
+        #     [[polarization(belief_array)] for belief_array in state]
+        #     for state in self.states
+        # ]
         return [
-            [[polarization(belief_array)] for belief_array in state]
-            for state in self.states
+            [polarization(belief_state[i]) for belief_state in self.states]
+            for i in len(range(self.k))
         ]
 
 
@@ -492,11 +503,11 @@ class UpdateFunctions:
             a_i = [
                 j for j in range(len(influence_graph[i])) if influence_graph[i][j] > 0
             ]
-            return belief_array[i] + (1 / len(a_i)) * np.sum(
+            return belief_array[i] + (1 / len(belief_array)) * np.sum(
                 (1 - np.abs(belief_array[j] - belief_array[i]))  # \beta^t_{i, j}
                 * influence_graph[j][i]
                 * (belief_array[j] - belief_array[i])
-                for j in a_i
+                for j in range(len(belief_array))
             )
 
         return [
