@@ -75,8 +75,8 @@ class AKV:
 
         self._check_sizes()
 
-        self.a = self.belief_state.shape[0]
-        self.k = self.belief_state.shape[1]
+        self.a = self.belief_state.shape[1]
+        self.k = self.belief_state.shape[0]
 
         self._check_influence_graph()
         self._check_belief_state()
@@ -156,7 +156,7 @@ class AKV:
         # ]
         return [
             [polarization(belief_state[i]) for belief_state in self.states]
-            for i in len(range(self.k))
+            for i in range(self.domain_size)
         ]
 
 
