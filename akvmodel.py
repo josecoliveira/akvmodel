@@ -117,7 +117,7 @@ class AKV:
         return self.belief_state
 
     def get_polarization(
-        self, k: int = 201, K: float = 1000, alpha: float =1.6
+        self, k: int = 201, K: float = 1000, alpha: float = 1.6
     ) -> List[List[float]]:
         """Get Esteban-Ray polarization for all states in the history.
 
@@ -136,24 +136,14 @@ class AKV:
             pi, bin_edges = np.histogram(
                 belief_array, bins=k, range=(0, 1), density=False
             )
-            # diff = np.diff(bin_edges)
-            # y = [(1 / k) + (1 / k) * i for i in range(k)]
             y = [bin_edges[i] + (1 / k) / 2 for i in range(k)]
-            # diff = (1 / k)
-            # pi = pi / np.sum(pi)
             pi = pi / np.sum(pi)
 
             return K * np.sum(
-                # np.sum(np.power(pi[i], 1 + alpha) * pi[j] * np.abs(diff[i]) for j in range(k))
                 np.sum(np.power(pi[i], 1 + alpha) * pi[j] * np.abs(y[i] - y[j]) for j in range(k))
-                # for i in range(k) if pi[i] != 0
                 for i in range(k)
             )
 
-        # return [
-        #     [[polarization(belief_array)] for belief_array in state]
-        #     for state in self.states
-        # ]
         return [
             [polarization(belief_state[i]) for belief_state in self.states]
             for i in range(self.domain_size)
