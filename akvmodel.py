@@ -2,8 +2,6 @@ from typing import Callable, List
 
 import numpy as np
 
-epsilon = 0.01
-
 
 class AKV:
     """AKV is a class that instantiates AKV models.
@@ -140,7 +138,10 @@ class AKV:
             pi = pi / np.sum(pi)
 
             return K * np.sum(
-                np.sum(np.power(pi[i], 1 + alpha) * pi[j] * np.abs(y[i] - y[j]) for j in range(k))
+                np.sum(
+                    np.power(pi[i], 1 + alpha) * pi[j] * np.abs(y[i] - y[j])
+                    for j in range(k)
+                )
                 for i in range(k)
             )
 
@@ -493,11 +494,11 @@ class UpdateFunctions:
             a_i = [
                 j for j in range(len(influence_graph[i])) if influence_graph[i][j] > 0
             ]
-            return belief_array[i] + (1 / len(belief_array)) * np.sum(
-                (1 - np.abs(belief_array[j] - belief_array[i]))  # \beta^t_{i, j}
+            return belief_array[i] + (1 / len(a_i)) * np.sum(
+                (1 - np.abs(belief_array[j] - belief_array[i]))
                 * influence_graph[j][i]
                 * (belief_array[j] - belief_array[i])
-                for j in range(len(belief_array))
+                for j in range(len(a_i))
             )
 
         return [
