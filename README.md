@@ -40,14 +40,12 @@ p = akvmodel.get_polarization()
 plt.plot(p[0])
 ```
 
-## Contributing
-
 Full example can be found in the Jupyter Notebook [example.ipynb](example.ipynb).
+
+## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 
