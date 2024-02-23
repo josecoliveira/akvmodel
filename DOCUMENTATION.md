@@ -1,20 +1,15 @@
 <!-- markdownlint-disable -->
 
-<a href="..\akvmodel.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-# <kbd>module</kbd> `akvmodel`
-
-
+# <kbd>module</kbd> `akvmodel.py`
 
 
-**Global Variables**
----------------
-- **epsilon**
+
+
 
 
 ---
-
-<a href="..\akvmodel.py#L8"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `AKV`
 AKV is a class that instantiates AKV models. 
@@ -37,9 +32,9 @@ AKV is a class that instantiates AKV models.
  - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
  - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far             using the update function. 
 
-<a href="..\akvmodel.py#L65"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L63"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `__init__`
+### <kbd>function</kbd> `__init__`
 
 ```python
 __init__(
@@ -84,12 +79,16 @@ Get the number of agents.
 
 ---
 
-<a href="..\akvmodel.py#L119"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L117"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `get_polarization`
+### <kbd>function</kbd> `get_polarization`
 
 ```python
-get_polarization(k: int = 201, K: float = 1000, alpha=1.0) → List[float]
+get_polarization(
+    k: int = 201,
+    K: float = 1000,
+    alpha: float = 1.6
+) → List[List[float]]
 ```
 
 Get Esteban-Ray polarization for all states in the history. 
@@ -100,7 +99,7 @@ Get Esteban-Ray polarization for all states in the history.
  
  - <b>`k`</b> (int, optional):  Number of bins. Defaults to 201. 
  - <b>`K`</b> (float, optional):  Hyperparameter K of the Esteban-Ray measure. Defaults                 to 1000. 
- - <b>`alpha`</b> (float, optional):  Hyperparameter $lpha$ of the Esteban-Ray                 measure. Defaults to 1.0. 
+ - <b>`alpha`</b> (float, optional):  Hyperparameter $lpha$ of the Esteban-Ray                 measure. Defaults to 1.6. 
 
 
 
@@ -110,9 +109,9 @@ Get Esteban-Ray polarization for all states in the history.
 
 ---
 
-<a href="..\akvmodel.py#L107"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L105"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `update`
+### <kbd>function</kbd> `update`
 
 ```python
 update() → List[List[float]]
@@ -129,8 +128,6 @@ Update the model one, updates the current belief state and add the new belief st
 
 ---
 
-<a href="..\akvmodel.py#L135"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
-
 ## <kbd>class</kbd> `InfluenceGraphs`
 Catalog of Influence Graphs in the literature. All functions are static. 
 
@@ -139,9 +136,9 @@ Catalog of Influence Graphs in the literature. All functions are static.
 
 ---
 
-<a href="..\akvmodel.py#L163"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L182"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `circular`
+### <kbd>function</kbd> `circular`
 
 ```python
 circular(num_agents: int, influence: float = 0.5) → List[List[float]]
@@ -166,9 +163,9 @@ The circular influence graph $\mathcal{I}^{clique}$ represents a social network 
 
 ---
 
-<a href="..\akvmodel.py#L138"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L157"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `clique`
+### <kbd>function</kbd> `clique`
 
 ```python
 clique(num_agents: int, influence: float = 1) → List[List[float]]
@@ -193,9 +190,9 @@ The clique influence graph $\mathcal{I}^{clique}$ represents an idealized totall
 
 ---
 
-<a href="..\akvmodel.py#L226"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L245"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `disconnected`
+### <kbd>function</kbd> `disconnected`
 
 ```python
 disconnected(num_agents: int, influence: float = 0.5) → List[List[float]]
@@ -220,9 +217,9 @@ The disconnected influence graph $\mathcal{I}^{disc}$ represents a social networ
 
 ---
 
-<a href="..\akvmodel.py#L191"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `faintly`
+### <kbd>function</kbd> `faintly`
 
 ```python
 faintly(
@@ -252,9 +249,9 @@ The faintly communicating influence graph $\mathcal{I}^{faint}$ represents a soc
 
 ---
 
-<a href="..\akvmodel.py#L245"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L264"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `malleable_influencers`
+### <kbd>function</kbd> `malleable_influencers`
 
 ```python
 malleable_influencers(
@@ -290,9 +287,9 @@ The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
 
 ---
 
-<a href="..\akvmodel.py#L294"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L313"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `unrelenting_influencers`
+### <kbd>function</kbd> `unrelenting_influencers`
 
 ```python
 unrelenting_influencers(
@@ -325,8 +322,6 @@ The unrelenting influencers influence graph $\mathcal{I}^{unrel}$ represents a s
 
 ---
 
-<a href="..\akvmodel.py#L330"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
-
 ## <kbd>class</kbd> `InitialConfigurations`
 Catalog of initial belief configurations in the literature. 
 
@@ -335,9 +330,9 @@ Catalog of initial belief configurations in the literature.
 
 ---
 
-<a href="..\akvmodel.py#L382"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L401"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `extreme`
+### <kbd>function</kbd> `extreme`
 
 ```python
 extreme(num_agents: int) → List[List[float]]
@@ -361,9 +356,9 @@ The extremely polarized belief configuration represents a situation in which hal
 
 ---
 
-<a href="..\akvmodel.py#L355"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L374"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `mildly`
+### <kbd>function</kbd> `mildly`
 
 ```python
 mildly(num_agents: int) → List[List[float]]
@@ -387,9 +382,9 @@ The mildly polarized belief configuration with agents evenly split into two grou
 
 ---
 
-<a href="..\akvmodel.py#L409"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L428"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `tripolar`
+### <kbd>function</kbd> `tripolar`
 
 ```python
 tripolar(num_agents: int) → List[List[float]]
@@ -413,9 +408,9 @@ The tripolar belief configuration with agents divided into three groups.
 
 ---
 
-<a href="..\akvmodel.py#L333"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L352"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `uniform`
+### <kbd>function</kbd> `uniform`
 
 ```python
 uniform(num_agents: int) → List[List[float]]
@@ -440,19 +435,17 @@ The uniform belief configuration represents a set of agents whose beliefs are as
 
 ---
 
-<a href="..\akvmodel.py#L441"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
-
 ## <kbd>class</kbd> `UpdateFunctions`
-Catalog of update functions in the literature. 
+Catalog of update functions in the literature. All functions are static. 
 
 
 
 
 ---
 
-<a href="..\akvmodel.py#L443"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L463"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `classic`
+### <kbd>function</kbd> `classic`
 
 ```python
 classic(
@@ -478,9 +471,9 @@ Computes the classic update of a belief state given a influence graph.
 
 ---
 
-<a href="..\akvmodel.py#L458"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+<a href="../akvmodel.py#L478"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `confirmation_bias`
+### <kbd>function</kbd> `confirmation_bias`
 
 ```python
 confirmation_bias(
