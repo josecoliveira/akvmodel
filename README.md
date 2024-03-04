@@ -1,6 +1,6 @@
 # akvmodel: A Python Tool for Social Network Simulations in the Alvim-Knight-Valencia Model
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10695210.svg)](https://doi.org/10.5281/zenodo.10695210)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10780385.svg)](https://doi.org/10.5281/zenodo.10780385)
 
 Formal models for social networks aim to capture the crucial aspects of the evolution of agents' beliefs over time, as communication occurs in a network. The Alvim-Knight-Valencia (AKV) social network model (2019) works on the dynamics of belief updates using a quantitative spectrum of belief values, and an influence graph representing the relationships between agents. Previous work on the AKV model developed belief update functions representing a range of belief update methods.
 
