@@ -1,0 +1,36 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: 'josecoliveira/akvmodel: v1.1.0'
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: José C.
+    family-names: Oliveira
+    email: josecarlosdeoliveirajr@gmail.com
+    affiliation: 'University of Minnesota, Duluth'
+    orcid: 'https://orcid.org/0009-0000-2266-0032'
+  - given-names: Sophia
+    family-names: Knight
+    email: sophia.knight@gmail.com
+    affiliation: 'University of Minnesota, Duluth'
+    orcid: 'https://orcid.org/0000-0001-6203-1505'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.10780385
+  - type: url
+    value: 'https://github.com/josecoliveira/akvmodel'
+repository-code: 'https://github.com/josecoliveira/akvmodel'
+keywords:
+  - social networks
+  - dynamic quantitative belief
+  - opinion change
+  - polarization
+  - multi-agent systems
+license: MIT
+commit: f3026d3733c58bcccd02277b1464305b8ccbf362
+version: v1.1.0
+date-released: '2024-03-04'
