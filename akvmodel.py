@@ -473,7 +473,20 @@ class UpdateFunctions:
         Returns:
             List[List[float]]: Belief state at time $t + 1$.
         """
-        raise NotImplementedError("")
+
+        def next_b(i, belief_array):
+            a_i = [
+                j for j in range(len(influence_graph[i])) if influence_graph[i][j] > 0
+            ]
+            return belief_array[i] + (1 / len(a_i)) * np.sum(
+                influence_graph[j][i] * (belief_array[j] - belief_array[i])
+                for j in range(len(a_i))
+            )
+        
+        return [
+            [next_b(i, belief_array) for i in range(len(belief_array))]
+            for belief_array in belief_state
+        ]
 
     @staticmethod
     def confirmation_bias(
