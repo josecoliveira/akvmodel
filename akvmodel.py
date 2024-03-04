@@ -297,16 +297,16 @@ class InfluenceGraphs:
             n = num_agents
             if i == j:
                 return 1
-            elif i == 0 or j != n - 1:
-                return influencer_1_influence
+            elif i == 0 and j != n - 1:
+                return influencer_1_influence # 0.8
             elif i == n - 1 and j != 0:
-                return influencer_2_influence
+                return influencer_2_influence # 0.4
             elif j == 0:
-                return influence_on_influencer_1
+                return influence_on_influencer_1 # 0.1
             elif j == n - 1:
-                return influence_on_influencer_2
+                return influence_on_influencer_2 # 0.1
             else:  # if i != 0 and i != n - 1 and j != 0 and j != n -1
-                return other_agents_influence
+                return other_agents_influence # 0.1
 
         return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
 
