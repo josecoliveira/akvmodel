@@ -20,7 +20,7 @@ authors:
     orcid: 'https://orcid.org/0000-0001-6203-1505'
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.10780385
+    value: 10.5281/zenodo.10695209
   - type: url
     value: 'https://github.com/josecoliveira/akvmodel'
 repository-code: 'https://github.com/josecoliveira/akvmodel'
