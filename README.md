@@ -16,7 +16,7 @@ pip install akvmodel
 
 ## Usage
 
-The full reference of the package can be found in [DOCUMENTATION.md](DOCUMENTATION.md).
+The full reference of the package can be found in `DOCUMENTATION.md`.
 
 ```python
 import numpy as np
@@ -40,7 +40,26 @@ p = akvmodel.get_polarization()
 plt.plot(p[0])
 ```
 
-Full example can be found in the Jupyter Notebook [example.ipynb](example.ipynb).
+Full example can be found in the Jupyter Notebook `example.ipynb`.
+
+## Testing with Docker
+
+This project includes a `Dockerfile` that builds an image with Jupyter
+Notebook and necessary requirements to run the example.
+
+Build the image:
+```bash
+docker build -t akvmodel-test .
+```
+
+Run the image:`
+```bash
+docker run -p 8888:8888 akvmodel-test
+```
+
+Open `localhost:8888` on your browser, use the password `test` and open the file
+`example.ipynb`. Changes on `example.ipynb` will not be saved.
+
 
 ## Contributing
 
