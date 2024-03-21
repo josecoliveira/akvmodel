@@ -42,7 +42,7 @@ plt.plot(p[0])
 
 Full example can be found in the Jupyter Notebook `example.ipynb`.
 
-## Testing with Docker
+## Trying the package with Docker
 
 This project includes a `Dockerfile` that builds an image with Jupyter
 Notebook and necessary requirements to run the example.
