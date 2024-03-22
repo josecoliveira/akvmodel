@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.1
+
+- Fix example on README.
+
 ## 1.2.0
 
 - Add Docker file to run the example at Jupyter Notebook.
