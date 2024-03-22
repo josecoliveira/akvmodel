@@ -19,7 +19,7 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering",
 ]
-dependencies = ["numpy"]
+dependencies = ["numpy", "matplotlib"]
 
 [project.urls]
 "Homepage" = "https://github.com/joseoliveirajr/akvmodel"
