@@ -23,7 +23,7 @@ import numpy as np
 from akvmodel import *
 
 # Create model with 10 agents, mildly polarized initial configuration, faintly communicating influence graph, and confirmation bias belief update.
-model = AKV(
+akvmodel = AKV(
     belief_state=InitialConfigurations.mildly(10),
     influence_graph=InfluenceGraphs.faintly(10),
     update_function=UpdateFunctions.confirmation_bias,
