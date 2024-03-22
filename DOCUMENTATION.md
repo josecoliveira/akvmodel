@@ -1,6 +1,6 @@
 <!-- markdownlint-disable -->
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 # <kbd>module</kbd> `akvmodel`
 
@@ -11,7 +11,6 @@
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L6"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ## <kbd>class</kbd> `AKV`
 AKV is a class that instantiates AKV models. 
@@ -34,7 +33,8 @@ AKV is a class that instantiates AKV models.
  - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
  - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far             using the update function. 
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L63"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
+
 
 ### <kbd>method</kbd> `__init__`
 
@@ -81,7 +81,6 @@ Get the number of agents.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L117"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `get_polarization`
 
@@ -111,7 +110,7 @@ Get Esteban-Ray polarization for all states in the history.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L105"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `update`
 
@@ -130,7 +129,7 @@ Update the model one, updates the current belief state and add the new belief st
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L154"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ## <kbd>class</kbd> `InfluenceGraphs`
 Catalog of Influence Graphs in the literature. All functions are static. 
@@ -140,7 +139,7 @@ Catalog of Influence Graphs in the literature. All functions are static.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L182"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `circular`
 
@@ -167,7 +166,7 @@ The circular influence graph $\mathcal{I}^{clique}$ represents a social network 
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L157"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `clique`
 
@@ -194,7 +193,7 @@ The clique influence graph $\mathcal{I}^{clique}$ represents an idealized totall
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L245"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `disconnected`
 
@@ -221,7 +220,7 @@ The disconnected influence graph $\mathcal{I}^{disc}$ represents a social networ
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `faintly`
 
@@ -253,7 +252,7 @@ The faintly communicating influence graph $\mathcal{I}^{faint}$ represents a soc
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L264"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `malleable_influencers`
 
@@ -291,7 +290,7 @@ The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L313"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `unrelenting_influencers`
 
@@ -326,7 +325,7 @@ The unrelenting influencers influence graph $\mathcal{I}^{unrel}$ represents a s
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L349"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ## <kbd>class</kbd> `InitialConfigurations`
 Catalog of initial belief configurations in the literature. 
@@ -336,7 +335,6 @@ Catalog of initial belief configurations in the literature.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L401"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
 ### <kbd>method</kbd> `extreme`
 
@@ -362,7 +360,7 @@ The extremely polarized belief configuration represents a situation in which hal
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L374"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `mildly`
 
@@ -388,7 +386,7 @@ The mildly polarized belief configuration with agents evenly split into two grou
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L428"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `tripolar`
 
@@ -414,7 +412,7 @@ The tripolar belief configuration with agents divided into three groups.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L352"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `uniform`
 
@@ -441,7 +439,7 @@ The uniform belief configuration represents a set of agents whose beliefs are as
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L460"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ## <kbd>class</kbd> `UpdateFunctions`
 Catalog of update functions in the literature. All functions are static. 
@@ -451,7 +449,7 @@ Catalog of update functions in the literature. All functions are static.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L463"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `classic`
 
@@ -479,7 +477,7 @@ Computes the classic update of a belief state given a influence graph.
 
 ---
 
-<a href="https://github.com/josecoliveira/akvmodel/blob/main/akvmodel.py#L491"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
+
 
 ### <kbd>method</kbd> `confirmation_bias`
 
