@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.2.0
+
+- Add Docker file to run the example at Jupyter Notebook.
+- Add instructions to run Docker file on the README.
+- Add CITATION.tff.
+- Add matplotlib as dependency.
+- Use permanent DOI on README.
+- Remove links to the source code in the documentation.
+
 ## 1.1.0
 
 - Add classic update function.
