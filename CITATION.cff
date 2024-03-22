@@ -31,6 +31,6 @@ keywords:
   - polarization
   - multi-agent systems
 license: MIT
-commit: 90290ec80bff23d30c806e0f09f6ff9400179b40
+commit: 07b08ed57840939bbe13adf261e2560cb258a45d
 version: v1.1.0
 date-released: '2024-03-04'
