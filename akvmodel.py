@@ -476,7 +476,7 @@ class UpdateFunctions:
 
         def next_b(i, belief_array):
             a_i = [
-                j for j in range(len(influence_graph[i])) if influence_graph[i][j] > 0
+                j for j in range(len(influence_graph[i])) if influence_graph[j][i] > 0
             ]
             return belief_array[i] + (1 / len(a_i)) * np.sum(
                 influence_graph[j][i] * (belief_array[j] - belief_array[i])
@@ -505,7 +505,7 @@ class UpdateFunctions:
 
         def next_b(i, belief_array):
             a_i = [
-                j for j in range(len(influence_graph[i])) if influence_graph[i][j] > 0
+                j for j in range(len(influence_graph[i])) if influence_graph[j][i] > 0
             ]
             return belief_array[i] + (1 / len(a_i)) * np.sum(
                 (1 - np.abs(belief_array[j] - belief_array[i]))
