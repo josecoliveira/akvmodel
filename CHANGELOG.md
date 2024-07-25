@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.3
+
+- Fix issues related to neighbor sets in update functions.
+
 ## 1.2.2
 
 - Fix typing hints and documentation for lists

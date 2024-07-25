@@ -1,6 +1,6 @@
 [project]
 name = "akvmodel"
-version = "1.2.2"
+version = "1.2.3"
 authors = [
     { name = "José C. Oliveira", email = "josecarlosdeoliveirajr@gmail.com" },
     { name = "Sophia Knight", email = "sophia.knight@gmail.com" },
