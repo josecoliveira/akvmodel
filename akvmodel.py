@@ -480,7 +480,7 @@ class UpdateFunctions:
             ]
             return belief_array[i] + (1 / len(a_i)) * np.sum(
                 influence_graph[j][i] * (belief_array[j] - belief_array[i])
-                for j in range(len(a_i))
+                for j in a_i
             )
         
         return [
@@ -511,7 +511,7 @@ class UpdateFunctions:
                 (1 - np.abs(belief_array[j] - belief_array[i]))
                 * influence_graph[j][i]
                 * (belief_array[j] - belief_array[i])
-                for j in range(len(a_i))
+                for j in a_i
             )
 
         return [
