@@ -1,6 +1,6 @@
 [project]
 name = "akvmodel"
-version = "1.2.1"
+version = "1.2.2"
 authors = [
     { name = "José C. Oliveira", email = "josecarlosdeoliveirajr@gmail.com" },
     { name = "Sophia Knight", email = "sophia.knight@gmail.com" },
@@ -13,7 +13,7 @@ readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",

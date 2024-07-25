@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.2
+
+- Fix typing hints and documentation for lists
+
 ## 1.2.1
 
 - Fix example on README.

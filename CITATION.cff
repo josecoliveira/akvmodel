@@ -2,7 +2,7 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: 'josecoliveira/akvmodel: v1.2.1'
+title: 'josecoliveira/akvmodel: v1.2.2'
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -32,5 +32,5 @@ keywords:
   - multi-agent systems
 license: MIT
 commit: 07b08ed57840939bbe13adf261e2560cb258a45d
-version: v1.1.0
+version: v1.2.2
 date-released: '2024-03-04'
