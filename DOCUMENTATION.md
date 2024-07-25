@@ -1,8 +1,8 @@
 <!-- markdownlint-disable -->
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-# <kbd>module</kbd> `akvmodel`
+# <kbd>module</kbd> `akvmodel.py`
 
 
 
@@ -11,7 +11,6 @@
 
 ---
 
-
 ## <kbd>class</kbd> `AKV`
 AKV is a class that instantiates AKV models. 
 
@@ -19,30 +18,29 @@ AKV is a class that instantiates AKV models.
 
 **Args:**
  
- - <b>`belief_state`</b> (List[List[float]]):  The initial belief state as a list. 
- - <b>`influence_graph`</b> (List[List[float]]):  The influence graph as a adjacency             list. 
- - <b>`update_function`</b> (Callable[[List[List[float]], List[List[float]]], List[List[float]]):              A function the gets a belief_state and an influence_graph and returns a             new belief_state. 
+ - <b>`belief_state`</b> (list[list[float]]):  The initial belief state as a list. 
+ - <b>`influence_graph`</b> (list[list[float]]):  The influence graph as a adjacency             list. 
+ - <b>`update_function`</b> (Callable[[list[list[float]], list[list[float]]], list[list[float]]):              A function the gets a belief_state and an influence_graph and returns a             new belief_state. 
 
 
 
 **Attributes:**
  
- - <b>`belief_state`</b> (List[List[float]]):  Current belief state. It's a list of             lists, each list whitin is a belief array corresponding to the i-th             outcome in the domain. 
- - <b>`influence_graph`</b> (List[List[float]]):  Adjacency list for the influence graph. 
+ - <b>`belief_state`</b> (list[list[float]]):  Current belief state. It's a list of             lists, each list whitin is a belief array corresponding to the i-th             outcome in the domain. 
+ - <b>`influence_graph`</b> (list[list[float]]):  Adjacency list for the influence graph. 
  - <b>`a`</b> (int):  Number of agents. 
  - <b>`k`</b> (int):  Size of the domain of independent outcomes for a proposition. 
- - <b>`states`</b> (List[List[List[float]]]):  List of all belief states computed so far             using the update function. 
+ - <b>`states`</b> (list[list[list[float]]]):  list of all belief states computed so far             using the update function. 
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L63"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-
-### <kbd>method</kbd> `__init__`
+### <kbd>function</kbd> `__init__`
 
 ```python
 __init__(
-    belief_state: List[List[float]],
-    influence_graph: List[List[float]],
-    update_function: Callable[[List[List[float]], List[List[float]]], List[List[float]]]
+    belief_state: list[list[float]],
+    influence_graph: list[list[float]],
+    update_function: Callable[[list[list[float]], list[list[float]]], list[list[float]]]
 )
 ```
 
@@ -81,15 +79,16 @@ Get the number of agents.
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L117"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `get_polarization`
+### <kbd>function</kbd> `get_polarization`
 
 ```python
 get_polarization(
     k: int = 201,
     K: float = 1000,
     alpha: float = 1.6
-) → List[List[float]]
+) → list[list[float]]
 ```
 
 Get Esteban-Ray polarization for all states in the history. 
@@ -100,22 +99,22 @@ Get Esteban-Ray polarization for all states in the history.
  
  - <b>`k`</b> (int, optional):  Number of bins. Defaults to 201. 
  - <b>`K`</b> (float, optional):  Hyperparameter K of the Esteban-Ray measure. Defaults                 to 1000. 
- - <b>`alpha`</b> (float, optional):  Hyperparameter $\alpha$ of the Esteban-Ray                 measure. Defaults to 1.6. 
+ - <b>`alpha`</b> (float, optional):  Hyperparameter $lpha$ of the Esteban-Ray                 measure. Defaults to 1.6. 
 
 
 
 **Returns:**
  
- - <b>`List[float]`</b>:  List of polarization values. 
+ - <b>`list[float]`</b>:  list of polarization values. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L105"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `update`
+### <kbd>function</kbd> `update`
 
 ```python
-update() → List[List[float]]
+update() → list[list[float]]
 ```
 
 Update the model one, updates the current belief state and add the new belief state to the history of states. 
@@ -124,12 +123,10 @@ Update the model one, updates the current belief state and add the new belief st
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  New belief state. 
+ - <b>`list[list[float]]`</b>:  New belief state. 
 
 
 ---
-
-
 
 ## <kbd>class</kbd> `InfluenceGraphs`
 Catalog of Influence Graphs in the literature. All functions are static. 
@@ -139,12 +136,12 @@ Catalog of Influence Graphs in the literature. All functions are static.
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L182"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `circular`
+### <kbd>function</kbd> `circular`
 
 ```python
-circular(num_agents: int, influence: float = 0.5) → List[List[float]]
+circular(num_agents: int, influence: float = 0.5) → list[list[float]]
 ```
 
 Creates a circular influence graph. 
@@ -162,16 +159,16 @@ The circular influence graph $\mathcal{I}^{clique}$ represents a social network 
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Adjacency matrix for the influence graph. 
+ - <b>`list[list[float]]`</b>:  Adjacency matrix for the influence graph. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L157"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `clique`
+### <kbd>function</kbd> `clique`
 
 ```python
-clique(num_agents: int, influence: float = 1) → List[List[float]]
+clique(num_agents: int, influence: float = 1) → list[list[float]]
 ```
 
 Creates a clique influence graph. 
@@ -189,16 +186,16 @@ The clique influence graph $\mathcal{I}^{clique}$ represents an idealized totall
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Adjacency matrix for the influence graph. 
+ - <b>`list[list[float]]`</b>:  Adjacency matrix for the influence graph. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L245"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `disconnected`
+### <kbd>function</kbd> `disconnected`
 
 ```python
-disconnected(num_agents: int, influence: float = 0.5) → List[List[float]]
+disconnected(num_agents: int, influence: float = 0.5) → list[list[float]]
 ```
 
 Creates a disconnected influence graph. 
@@ -216,20 +213,20 @@ The disconnected influence graph $\mathcal{I}^{disc}$ represents a social networ
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Adjacency matrix for the influence graph. 
+ - <b>`list[list[float]]`</b>:  Adjacency matrix for the influence graph. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L210"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `faintly`
+### <kbd>function</kbd> `faintly`
 
 ```python
 faintly(
     num_agents: int,
     strong_influence: float = 0.5,
     weak_influence: float = 0.1
-) → List[List[float]]
+) → list[list[float]]
 ```
 
 Creates a faintly communicating influence graph. 
@@ -248,13 +245,13 @@ The faintly communicating influence graph $\mathcal{I}^{faint}$ represents a soc
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Adjacency matrix for the influence graph. 
+ - <b>`list[list[float]]`</b>:  Adjacency matrix for the influence graph. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L264"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `malleable_influencers`
+### <kbd>function</kbd> `malleable_influencers`
 
 ```python
 malleable_influencers(
@@ -264,7 +261,7 @@ malleable_influencers(
     influence_on_influencer_1: float = 0.1,
     influence_on_influencer_2: float = 0.1,
     other_agents_influence: float = 0.1
-) → List[List[float]]
+) → list[list[float]]
 ```
 
 Creates a malleable influencers influence graph. 
@@ -286,13 +283,13 @@ The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Adjacency matrix for the influence graph. 
+ - <b>`list[list[float]]`</b>:  Adjacency matrix for the influence graph. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L313"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `unrelenting_influencers`
+### <kbd>function</kbd> `unrelenting_influencers`
 
 ```python
 unrelenting_influencers(
@@ -300,7 +297,7 @@ unrelenting_influencers(
     influencer_1_influence: float = 0.6,
     influencer_2_influence: float = 0.6,
     other_agents_influence: float = 0.1
-) → List[List[float]]
+) → list[list[float]]
 ```
 
 Creates an unrelenting influencers influence graph. 
@@ -320,12 +317,10 @@ The unrelenting influencers influence graph $\mathcal{I}^{unrel}$ represents a s
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Adjacency matrix for the influence graph. 
+ - <b>`list[list[float]]`</b>:  Adjacency matrix for the influence graph. 
 
 
 ---
-
-
 
 ## <kbd>class</kbd> `InitialConfigurations`
 Catalog of initial belief configurations in the literature. 
@@ -335,11 +330,12 @@ Catalog of initial belief configurations in the literature.
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L401"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-### <kbd>method</kbd> `extreme`
+### <kbd>function</kbd> `extreme`
 
 ```python
-extreme(num_agents: int) → List[List[float]]
+extreme(num_agents: int) → list[list[float]]
 ```
 
 Creates an extremely polarized belief configuration with domain of size 2. 
@@ -356,16 +352,16 @@ The extremely polarized belief configuration represents a situation in which hal
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Belief state for the inicial configuration. 
+ - <b>`list[list[float]]`</b>:  Belief state for the inicial configuration. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L374"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `mildly`
+### <kbd>function</kbd> `mildly`
 
 ```python
-mildly(num_agents: int) → List[List[float]]
+mildly(num_agents: int) → list[list[float]]
 ```
 
 Creates a mildly polarized belief configuration with domain of size 2. 
@@ -382,16 +378,16 @@ The mildly polarized belief configuration with agents evenly split into two grou
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Belief state for the inicial configuration. 
+ - <b>`list[list[float]]`</b>:  Belief state for the inicial configuration. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L428"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `tripolar`
+### <kbd>function</kbd> `tripolar`
 
 ```python
-tripolar(num_agents: int) → List[List[float]]
+tripolar(num_agents: int) → list[list[float]]
 ```
 
 Creates an tripolar belief configuration with domain of size 2. 
@@ -408,16 +404,16 @@ The tripolar belief configuration with agents divided into three groups.
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Belief state for the inicial configuration. 
+ - <b>`list[list[float]]`</b>:  Belief state for the inicial configuration. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L352"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `uniform`
+### <kbd>function</kbd> `uniform`
 
 ```python
-uniform(num_agents: int) → List[List[float]]
+uniform(num_agents: int) → list[list[float]]
 ```
 
 Creates a uniform belief configuration with domain of size 2. 
@@ -434,12 +430,10 @@ The uniform belief configuration represents a set of agents whose beliefs are as
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Belief state for the inicial configuration. 
+ - <b>`list[list[float]]`</b>:  Belief state for the inicial configuration. 
 
 
 ---
-
-
 
 ## <kbd>class</kbd> `UpdateFunctions`
 Catalog of update functions in the literature. All functions are static. 
@@ -449,15 +443,15 @@ Catalog of update functions in the literature. All functions are static.
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L463"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `classic`
+### <kbd>function</kbd> `classic`
 
 ```python
 classic(
-    belief_state: List[List[float]],
-    influence_graph: List[List[float]]
-) → List[List[float]]
+    belief_state: list[list[float]],
+    influence_graph: list[list[float]]
+) → list[list[float]]
 ```
 
 Computes the classic update of a belief state given a influence graph. 
@@ -466,26 +460,26 @@ Computes the classic update of a belief state given a influence graph.
 
 **Args:**
  
- - <b>`belief_state`</b> (List[List[float]]):  Belief state at time $t$. 
- - <b>`influence_graph`</b> (List[List[float]]):  Influence graph as a adjacency matrix. 
+ - <b>`belief_state`</b> (list[list[float]]):  Belief state at time $t$. 
+ - <b>`influence_graph`</b> (list[list[float]]):  Influence graph as a adjacency matrix. 
 
 
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Belief state at time $t + 1$. 
+ - <b>`list[list[float]]`</b>:  Belief state at time $t + 1$. 
 
 ---
 
+<a href="https://github.com/josecoliveira/akvmodel/tree/v1.2.2\akvmodel.py#L491"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a>
 
-
-### <kbd>method</kbd> `confirmation_bias`
+### <kbd>function</kbd> `confirmation_bias`
 
 ```python
 confirmation_bias(
-    belief_state: List[List[float]],
-    influence_graph: List[List[float]]
-) → List[List[float]]
+    belief_state: list[list[float]],
+    influence_graph: list[list[float]]
+) → list[list[float]]
 ```
 
 Computes the confirmation bias update of a belief state given a influence graph. 
@@ -494,14 +488,14 @@ Computes the confirmation bias update of a belief state given a influence graph.
 
 **Args:**
  
- - <b>`belief_state`</b> (List[List[float]]):  Belief state at time $t$. 
- - <b>`influence_graph`</b> (List[List[float]]):  Influence graph as a adjacency matrix. 
+ - <b>`belief_state`</b> (list[list[float]]):  Belief state at time $t$. 
+ - <b>`influence_graph`</b> (list[list[float]]):  Influence graph as a adjacency matrix. 
 
 
 
 **Returns:**
  
- - <b>`List[List[float]]`</b>:  Belief state at time $t + 1$. 
+ - <b>`list[list[float]]`</b>:  Belief state at time $t + 1$. 
 
 
 

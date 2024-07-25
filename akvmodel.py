@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable
 
 import numpy as np
 
@@ -7,21 +7,21 @@ class AKV:
     """AKV is a class that instantiates AKV models.
 
     Args:
-        belief_state (List[List[float]]): The initial belief state as a list.
-        influence_graph (List[List[float]]): The influence graph as a adjacency \
+        belief_state (list[list[float]]): The initial belief state as a list.
+        influence_graph (list[list[float]]): The influence graph as a adjacency \
             list.
-        update_function(Callable[[List[List[float]], List[List[float]]], List[List[float]]): \
+        update_function(Callable[[list[list[float]], list[list[float]]], list[list[float]]): \
             A function the gets a belief_state and an influence_graph and returns a \
             new belief_state.
 
     Attributes:
-        belief_state (List[List[float]]): Current belief state. It's a list of \
+        belief_state (list[list[float]]): Current belief state. It's a list of \
             lists, each list whitin is a belief array corresponding to the i-th \
             outcome in the domain.
-        influence_graph (List[List[float]]): Adjacency list for the influence graph.
+        influence_graph (list[list[float]]): Adjacency list for the influence graph.
         a (int): Number of agents.
         k (int): Size of the domain of independent outcomes for a proposition.
-        states (List[List[List[float]]]): List of all belief states computed so far \
+        states (list[list[list[float]]]): list of all belief states computed so far \
             using the update function.
     """
 
@@ -62,10 +62,10 @@ class AKV:
 
     def __init__(
         self,
-        belief_state: List[List[float]],
-        influence_graph: List[List[float]],
+        belief_state: list[list[float]],
+        influence_graph: list[list[float]],
         update_function: Callable[
-            [List[List[float]], List[List[float]]], List[List[float]]
+            [list[list[float]], list[list[float]]], list[list[float]]
         ],
     ):
         self.belief_state = np.array(belief_state)
@@ -102,12 +102,12 @@ class AKV:
         """
         return self.k
 
-    def update(self) -> List[List[float]]:
+    def update(self) -> list[list[float]]:
         """Update the model one, updates the current belief state and add the new belief
         state to the history of states.
 
         Returns:
-            List[List[float]]: New belief state.
+            list[list[float]]: New belief state.
         """
         new_belief_state = self.update_function(self.belief_state, self.influence_graph)
         self.belief_state = new_belief_state
@@ -116,7 +116,7 @@ class AKV:
 
     def get_polarization(
         self, k: int = 201, K: float = 1000, alpha: float = 1.6
-    ) -> List[List[float]]:
+    ) -> list[list[float]]:
         """Get Esteban-Ray polarization for all states in the history.
 
         Args:
@@ -127,7 +127,7 @@ class AKV:
                 measure. Defaults to 1.6.
 
         Returns:
-            List[float]: List of polarization values.
+            list[float]: list of polarization values.
         """
 
         def polarization(belief_array):
@@ -155,7 +155,7 @@ class InfluenceGraphs:
     """Catalog of Influence Graphs in the literature. All functions are static."""
 
     @staticmethod
-    def clique(num_agents: int, influence: float = 1) -> List[List[float]]:
+    def clique(num_agents: int, influence: float = 1) -> list[list[float]]:
         """Creates a clique influence graph.
         
         The clique influence graph $\mathcal{I}^{clique}$ represents an idealized
@@ -167,7 +167,7 @@ class InfluenceGraphs:
                 other. Defaults to 1.
 
         Returns:
-            List[List[float]]: Adjacency matrix for the influence graph.
+            list[list[float]]: Adjacency matrix for the influence graph.
         """
 
         def I(i: int, j: int) -> float:
@@ -180,7 +180,7 @@ class InfluenceGraphs:
         return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
 
     @staticmethod
-    def circular(num_agents: int, influence: float = 0.5) -> List[List[float]]:
+    def circular(num_agents: int, influence: float = 0.5) -> list[list[float]]:
         """Creates a circular influence graph.
         
         The circular influence graph $\mathcal{I}^{clique}$ represents a social network
@@ -193,7 +193,7 @@ class InfluenceGraphs:
                 Defaults to 0.5.
 
         Returns:
-            List[List[float]]: Adjacency matrix for the influence graph.
+            list[list[float]]: Adjacency matrix for the influence graph.
         """
 
         def I(i: int, j: int) -> float:
@@ -210,7 +210,7 @@ class InfluenceGraphs:
     @staticmethod
     def faintly(
         num_agents: int, strong_influence: float = 0.5, weak_influence: float = 0.1
-    ) -> List[List[float]]:
+    ) -> list[list[float]]:
         """Creates a faintly communicating influence graph.
         
         The faintly communicating influence graph $\mathcal{I}^{faint}$ represents a
@@ -226,7 +226,7 @@ class InfluenceGraphs:
                 groups. Defaults to 0.1.
 
         Returns:
-            List[List[float]]: Adjacency matrix for the influence graph.
+            list[list[float]]: Adjacency matrix for the influence graph.
         """
 
         def I(i: int, j: int) -> float:
@@ -243,7 +243,7 @@ class InfluenceGraphs:
         return [[I(i, j) for j in range(num_agents)] for i in range(num_agents)]
 
     @staticmethod
-    def disconnected(num_agents: int, influence: float = 0.5) -> List[List[float]]:
+    def disconnected(num_agents: int, influence: float = 0.5) -> list[list[float]]:
         """Creates a disconnected influence graph.
         
         The disconnected influence graph $\mathcal{I}^{disc}$ represents a social
@@ -257,7 +257,7 @@ class InfluenceGraphs:
                 group. Defaults to 0.5.
 
         Returns:
-            List[List[float]]: Adjacency matrix for the influence graph.
+            list[list[float]]: Adjacency matrix for the influence graph.
         """
         return InfluenceGraphs.faintly(num_agents, influence, 0)
 
@@ -269,7 +269,7 @@ class InfluenceGraphs:
         influence_on_influencer_1: float = 0.1,
         influence_on_influencer_2: float = 0.1,
         other_agents_influence: float = 0.1,
-    ) -> List[List[float]]:
+    ) -> list[list[float]]:
         """Creates a malleable influencers influence graph.
         
         The malleable influencers influence graph $\mathcal{I}^{malleable}$ represents a
@@ -290,7 +290,7 @@ class InfluenceGraphs:
                 have on each other. Defaults to 0.1.
 
         Returns:
-            List[List[float]]: Adjacency matrix for the influence graph.
+            list[list[float]]: Adjacency matrix for the influence graph.
         """
 
         def I(i: int, j: int) -> float:
@@ -316,7 +316,7 @@ class InfluenceGraphs:
         influencer_1_influence: float = 0.6,
         influencer_2_influence: float = 0.6,
         other_agents_influence: float = 0.1,
-    ) -> List[List[float]]:
+    ) -> list[list[float]]:
         """Creates an unrelenting influencers influence graph.
         
         The unrelenting influencers influence graph $\mathcal{I}^{unrel}$ represents a
@@ -334,7 +334,7 @@ class InfluenceGraphs:
                 have on each other. Defaults to 0.1.
 
         Returns:
-            List[List[float]]: Adjacency matrix for the influence graph.
+            list[list[float]]: Adjacency matrix for the influence graph.
         """
         return InfluenceGraphs.malleable_influencers(
             num_agents,
@@ -350,7 +350,7 @@ class InitialConfigurations:
     """Catalog of initial belief configurations in the literature."""
 
     @staticmethod
-    def uniform(num_agents: int) -> List[List[float]]:
+    def uniform(num_agents: int) -> list[list[float]]:
         """Creates a uniform belief configuration with domain of size 2.
 
         The uniform belief configuration represents a set of agents whose beliefs are as
@@ -360,7 +360,7 @@ class InitialConfigurations:
             num_agents (int): Number of agents.
 
         Returns:
-            List[List[float]]: Belief state for the inicial configuration.
+            list[list[float]]: Belief state for the inicial configuration.
         """
 
         def B(i: int) -> float:
@@ -372,7 +372,7 @@ class InitialConfigurations:
         ]
 
     @staticmethod
-    def mildly(num_agents: int) -> List[List[float]]:
+    def mildly(num_agents: int) -> list[list[float]]:
         """Creates a mildly polarized belief configuration with domain of size 2.
 
         The mildly polarized belief configuration with agents evenly split into two
@@ -383,7 +383,7 @@ class InitialConfigurations:
             num_agents (int): Number of agents.
 
         Returns:
-            List[List[float]]: Belief state for the inicial configuration.
+            list[list[float]]: Belief state for the inicial configuration.
         """
 
         def B(i: int) -> float:
@@ -399,7 +399,7 @@ class InitialConfigurations:
         ]
 
     @staticmethod
-    def extreme(num_agents: int) -> List[List[float]]:
+    def extreme(num_agents: int) -> list[list[float]]:
         """Creates an extremely polarized belief configuration with domain of size 2.
 
         The extremely polarized belief configuration represents a situation in which
@@ -410,7 +410,7 @@ class InitialConfigurations:
             num_agents (int): Number of agents.
 
         Returns:
-            List[List[float]]: Belief state for the inicial configuration.
+            list[list[float]]: Belief state for the inicial configuration.
         """
 
         def B(i: int) -> float:
@@ -426,7 +426,7 @@ class InitialConfigurations:
         ]
 
     @staticmethod
-    def tripolar(num_agents: int) -> List[List[float]]:
+    def tripolar(num_agents: int) -> list[list[float]]:
         """Creates an tripolar belief configuration with domain of size 2.
 
         The tripolar belief configuration with agents divided into three groups.
@@ -435,7 +435,7 @@ class InitialConfigurations:
             num_agents (int): Number of agents.
 
         Returns:
-            List[List[float]]: Belief state for the inicial configuration.
+            list[list[float]]: Belief state for the inicial configuration.
         """
 
         def B(i: int) -> float:
@@ -462,16 +462,16 @@ class UpdateFunctions:
 
     @staticmethod
     def classic(
-        belief_state: List[List[float]], influence_graph: List[List[float]]
-    ) -> List[List[float]]:
+        belief_state: list[list[float]], influence_graph: list[list[float]]
+    ) -> list[list[float]]:
         """Computes the classic update of a belief state given a influence graph.
 
         Args:
-            belief_state (List[List[float]]): Belief state at time $t$.
-            influence_graph (List[List[float]]): Influence graph as a adjacency matrix.
+            belief_state (list[list[float]]): Belief state at time $t$.
+            influence_graph (list[list[float]]): Influence graph as a adjacency matrix.
 
         Returns:
-            List[List[float]]: Belief state at time $t + 1$.
+            list[list[float]]: Belief state at time $t + 1$.
         """
 
         def next_b(i, belief_array):
@@ -490,17 +490,17 @@ class UpdateFunctions:
 
     @staticmethod
     def confirmation_bias(
-        belief_state: List[List[float]], influence_graph: List[List[float]]
-    ) -> List[List[float]]:
+        belief_state: list[list[float]], influence_graph: list[list[float]]
+    ) -> list[list[float]]:
         """Computes the confirmation bias update of a belief state given a influence
         graph.
 
         Args:
-            belief_state (List[List[float]]): Belief state at time $t$.
-            influence_graph (List[List[float]]): Influence graph as a adjacency matrix.
+            belief_state (list[list[float]]): Belief state at time $t$.
+            influence_graph (list[list[float]]): Influence graph as a adjacency matrix.
 
         Returns:
-            List[List[float]]: Belief state at time $t + 1$.
+            list[list[float]]: Belief state at time $t + 1$.
         """
 
         def next_b(i, belief_array):
